@@ -1,0 +1,8 @@
+<h1>Readings</h1>
+<ul>
+  {% for reading in object_list %}
+    <li>{{ reading }}</li>
+  {% empty %}
+    <li>No reading yet.</li>
+  {% endfor %}
+</ul>
