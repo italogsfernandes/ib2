@@ -1,0 +1,19 @@
+{
+  "name": "ib2",
+  "version": "1.0.0",
+  "description": "Instrumentação Biomédica 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/italogsfernandes/ib2.git"
+  },
+  "author": "Italo G S Fernandes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/italogsfernandes/ib2/issues"
+  },
+  "homepage": "https://github.com/italogsfernandes/ib2#readme"
+}
