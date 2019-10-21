@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
@@ -18,8 +18,11 @@ def get_multiparametric_reading_dict():
 
 
 def index(request):
-    return HttpResponse("Vitalis Index Page")
-    
+    context = {
+        'information': 'tudo bom?',
+    }
+    return render(request, 'vitalis/index.html', context)
+
 
 class MyReadingsListView(ListView):
     template_name = 'vitalis/my-readings.html'
@@ -56,3 +59,14 @@ class MyReadingsListView(ListView):
         })
 
 
+class AboutView(TemplateView):
+    template_name = "vitalis/about.html"
+
+class LoginView(TemplateView):
+    template_name = "vitalis/login.html"
+
+class LogoutView(TemplateView):
+    template_name = "vitalis/logout.html"
+
+class SingUpView(TemplateView):
+    template_name = "vitalis/sing-up.html"
