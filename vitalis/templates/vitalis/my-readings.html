@@ -186,12 +186,14 @@
 </div>
 
 
+{% endblock %}
 
+
+{% block extra_js %}
+{{ block_super }}
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="moment.js"></script>
+<script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@latest/dist/chartjs-plugin-streaming.min.js"></script>
 <script src="https://mbostock.github.com/d3/d3.v2.js"></script>
-
-
 {% endblock %}
