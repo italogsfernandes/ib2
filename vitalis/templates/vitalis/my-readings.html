@@ -1,199 +1,82 @@
 {% extends "vitalis/base.html" %}
 {% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Leituras{% endblock %}
+
+{% block extra_css %}
+{{ block_super }}
+{% endblock %}
 
 
 {% block outside_content %}
 
-<style>
-  #test1 {
-    margin: 0;
-    padding: 0;
-    overflow: none;
-  }
+<section id="my_readings_section" class="paddingtop-60">
+  <div class="margintop-50">
+    <div class="col-lg-2">
+      <div class="content-section">
+        <h5>Opções</h5>
+        <div style="padding-bottom: 25px;">
+          <form action="{% url 'my-readings' %}" method="post">
+            {% csrf_token %}
+            <button class='btn btn-primary' type="submit">Realizar Leitura</button>
+          </form>
+        </div>
 
+        <h5>Sensores</h5>
+        <ul>
+          <li>
+            <input type="checkbox" name="viewer-oximetro" value="oximetro" id="input_oximetro" checked>
+            Oximetro
+          </li>
+          <li>
+            <input type="checkbox" name="viewer-batimentos_cardiacos" value="batimentos_cardiacos" id="input_batimentos_cardiacos" checked>
+            Batimentos Cardiácos
+          </li>
+          <li>
+            <input type="checkbox" name="viewer-temperatura" value="temperatura" id="input_temperatura" checked>
+            Temperatura
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-10">
 
+      <div class="row">
+        <div class="col-lg-offset-3 col-lg-6">
+          <div>
+            <h4 class="text-center">Sinal Oximetro </h4>
+            <canvas id="chart_oximetro_pulso"></canvas>
+          </div>
+        </div>
 
-  /********************
- * TOOLTIP CSS
- */
+        {# <div class="col-lg-6"> #}
+          {# <div> #}
+            {# <h4>Temperatura</h4> #}
+            {# <canvas id="chart_temperatura"></canvas> #}
+          {# </div> #}
+        {# </div> #}
 
-  .nvtooltip {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 1);
-    padding: 10px;
-    border: 1px solid #ddd;
+      </div>
 
-    font-family: Arial;
-    font-size: 13px;
+      <div id="readings_list_div">
+        {% include 'vitalis/_readings_list.html' %}
+      </div>
 
-    transition: opacity 500ms linear;
-    -moz-transition: opacity 500ms linear;
-    -webkit-transition: opacity 500ms linear;
+    </div>
+  </div>
+</section>
 
-    transition-delay: 500ms -moz-transition-delay: 500ms;
-    -webkit-transition-delay: 500ms;
-
-    -moz-box-shadow: 4px 4px 12px rgba(0, 0, 0, .5);
-    -webkit-box-shadow: 4px 4px 12px rgba(0, 0, 0, .5);
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, .5);
-
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-  }
-
-  .nvtooltip h3 {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-
-  .nvtooltip p {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-
-  .nvtooltip span {
-    display: inline-block;
-    margin: 2px 0;
-  }
-
-
-
-
-
-  /**********
-*  General SVG CSS
-*/
-
-
-  text {
-    font: 12px sans-serif;
-  }
-
-
-
-  /**********
-*  Legend
-*/
-
-  .legend .series {
-    cursor: pointer;
-  }
-
-  .legend circle {
-    stroke-width: 2px;
-  }
-
-  .legend .disabled circle {
-    fill-opacity: 0;
-  }
-
-
-
-  /**********
-*  Axes
-*/
-
-  .axis path {
-    fill: none;
-    stroke: #000;
-    stroke-opacity: .75;
-    shape-rendering: crispEdges;
-  }
-
-  .axis path.domain {
-    stroke-opacity: .75;
-  }
-
-  .axis line {
-    fill: none;
-    stroke: #000;
-    stroke-opacity: .25;
-    shape-rendering: crispEdges;
-  }
-
-  .axis line.zero {
-    stroke-opacity: .75;
-  }
-
-
-
-  /**********
-*  Line chart
-*/
-
-  .point-paths path {
-    /*
-  fill: #eee;
-  stroke: #aaa;
-  */
-    stroke-opacity: 0;
-    fill-opacity: 0;
-  }
-
-
-  .lines path {
-    fill: none;
-    stroke-width: 1.5px;
-    stroke-linecap: round;
-
-    transition: stroke-width 250ms linear;
-    -moz-transition: stroke-width 250ms linear;
-    -webkit-transition: stroke-width 250ms linear;
-
-    transition-delay: 250ms -moz-transition-delay: 250ms;
-    -webkit-transition-delay: 250ms;
-  }
-
-  .line.hover path {
-    stroke-width: 6px;
-  }
-
-  .lines .point {
-    transition: stroke-width 250ms linear;
-    -moz-transition: stroke-width 250ms linear;
-    -webkit-transition: stroke-width 250ms linear;
-  }
-
-  .lines .point.hover {
-    stroke-width: 20px;
-    stroke-opacity: .5;
-  }
-</style>
-
-
-
-<div>
-  <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
-  <form action="{% url 'my-readings' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Add one data value</button>
-  </form>
+<div style="margin-top: 50px;">
 </div>
-<div id="readings_list_div">
-
-
-  {% include 'vitalis/_readings_list.html' %}
-</div>
-
-
-
-<div id="test1">
-  <svg></svg>
-</div>
-
-
 {% endblock %}
 
 
 {% block extra_js %}
 {{ block_super }}
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@latest/dist/chartjs-plugin-streaming.min.js"></script>
-<script src="https://mbostock.github.com/d3/d3.v2.js"></script>
+
+<script type="text/javascript" src="{% static 'js/my-readings.js' %}"></script>
+
 {% endblock %}
