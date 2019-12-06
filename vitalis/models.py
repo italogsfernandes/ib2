@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class MultiparametricReading(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -14,12 +15,12 @@ class MultiparametricReading(models.Model):
     oxygen_saturation = models.DecimalField(
         decimal_places=2, max_digits=4, blank=True, null=True,
     )
-    
+
     # Body temperature
     body_temperature = models.DecimalField(
         decimal_places=1, max_digits=3, blank=True, null=True,
     )
-    
+
     def __str__(self):
         return (
             "{user} on {date} - "
@@ -31,4 +32,3 @@ class MultiparametricReading(models.Model):
                 temp=self.body_temperature,
             )
         )
-

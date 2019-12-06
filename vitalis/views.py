@@ -1,15 +1,17 @@
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 from .models import MultiparametricReading
+
 
 def get_multiparametric_reading_dict():
     import random
     heart_rate = random.randint(35, 220)
     oxygen_saturation = random.uniform(80, 99)
-    body_temperature = random.uniform(24, 45) # https://en.wikipedia.org/wiki/Human_body_temperature#Temperature_variation
+    # https://en.wikipedia.org/wiki/Human_body_temperature#Temperature_variation
+    body_temperature = random.uniform(24, 45)
     return {
         'heart_rate': heart_rate,
         'oxygen_saturation': oxygen_saturation,
@@ -35,7 +37,6 @@ class MyReadingsListView(ListView):
         qs = qs.filter(user=self.request.user)
         return qs
 
-
     def post(self, request, *args, **kwargs):
         data_dict = get_multiparametric_reading_dict()
         data_dict['user'] = request.user
@@ -54,7 +55,7 @@ class MyReadingsListView(ListView):
         )
         m = render_to_string('vitalis/_messages.html', request=request)
         return JsonResponse({
-         'readings_list_div': basket_content,
+         'readings_list_div': readings_list_content,
          'messages': m
         })
 
