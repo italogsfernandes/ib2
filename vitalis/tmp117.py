@@ -35,53 +35,53 @@ class TMP117(object):
         # TODO: self.set_mode(MODE_HR)  # Trigger an initial temperature read.
 
     def get_temperature(self):
-        return self.i2c.read_byte_data(I2C_ADDRESS, Temp_Result_Register)
+        return self.i2c.read_word_data(I2C_ADDRESS, Temp_Result_Register)
 
     def get_temp_result_register_value(self):
-        return self.i2c.read_byte_data(I2C_ADDRESS, Temp_Result_Register)
+        return self.i2c.read_word_data(I2C_ADDRESS, Temp_Result_Register)
 
     def get_device_id(self):
-        return self.i2c.read_byte_data(I2C_ADDRESS, Device_ID_Register)
+        return self.i2c.read_word_data(I2C_ADDRESS, Device_ID_Register)
 
     def get_registers(self):
         return {
-            "Temp_Result_Register": self.i2c.read_byte_data(
+            "Temp_Result_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 Temp_Result_Register,
             ),
-            "Configuration_Register": self.i2c.read_byte_data(
+            "Configuration_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 Configuration_Register,
             ),
-            "THigh_Limit_Register": self.i2c.read_byte_data(
+            "THigh_Limit_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 THigh_Limit_Register,
             ),
-            "TLow_Limit_Register": self.i2c.read_byte_data(
+            "TLow_Limit_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 TLow_Limit_Register,
             ),
-            "EEPROM_UL_Register": self.i2c.read_byte_data(
+            "EEPROM_UL_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 EEPROM_UL_Register,
             ),
-            "EEPROM1_Register": self.i2c.read_byte_data(
+            "EEPROM1_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 EEPROM1_Register,
             ),
-            "EEPROM2_Register": self.i2c.read_byte_data(
+            "EEPROM2_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 EEPROM2_Register,
             ),
-            "Temp_Offset_Register": self.i2c.read_byte_data(
+            "Temp_Offset_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 Temp_Offset_Register,
             ),
-            "EEPROM3_Register": self.i2c.read_byte_data(
+            "EEPROM3_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 EEPROM3_Register,
             ),
-            "Device_ID_Register": self.i2c.read_byte_data(
+            "Device_ID_Register": self.i2c.read_word_data(
                 I2C_ADDRESS,
                 Device_ID_Register,
             ),
@@ -91,5 +91,4 @@ class TMP117(object):
 if __name__ == "__main__":
     my_tmp117 = TMP117()
     print(my_tmp117.get_device_id())
-    import pdb; pdb.set_trace()
     print(my_tmp117.get_temp_result_register_value())
