@@ -19,7 +19,9 @@
     <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="{% url 'my-readings' %}">Leituras</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'my-readings' %}">Leituras</a></li>
+        {% endif %}
         <li><a href="{% url 'about' %}">Sobre</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -37,11 +39,17 @@
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
             {% if user.is_authenticated %}
-              <li><a href="{% url 'logout' %}">Perfil</a></li>
-              <li><a href="{% url 'logout' %}">Sair</a></li>
+              <li><a href="{% url 'admin:logout' %}">Perfil</a></li>
+              <li><a href="{% url 'admin:logout' %}?next={% url 'index' %}">Sair</a></li>
             {% else %}
-              <li><a href="{% url 'login' %}">Entrar</a></li>
-              <li><a href="{% url 'sing-up' %}">Cadastro</a></li>
+              <li><a href="{% url 'admin:login' %}?next={% url 'my-readings' %}">Entrar</a></li>
+              <li>
+                <a
+                href="mailto:italogsfernandes@gmail.com?subject=Solicitação de Cadastro - Vitalis IB2&body=Bom dia,
+Eu gostaria de solicitar um cadastro no serviço de monitoramento.">
+                Cadastro
+                </a>
+              </li>
             {% endif %}
           </ul>
         </li>
