@@ -35,7 +35,9 @@ class TMP117(object):
         # TODO: self.set_mode(MODE_HR)  # Trigger an initial temperature read.
 
     def get_temperature(self):
-        return self.i2c.read_word_data(I2C_ADDRESS, Temp_Result_Register)
+        temp_raw_value = self.get_temp_result_register_value()
+        temp_value = _twos_complement(temp_raw_value) * 0.0078125
+        return temp_value
 
     def get_temp_result_register_value(self):
         return self.i2c.read_word_data(I2C_ADDRESS, Temp_Result_Register)

@@ -111,7 +111,10 @@ def sensores_conectados_extra_view(request):
                 "<h2> TMP117: </h2>" +
                 "<pre>" +
                 str(tmp117_teste.get_registers()) +
-                "</pre>"
+                "</pre>" +
+                "<ul><li>Temperatura: " +
+                str(tmp117_teste.get_temperature()) +
+                " ºC </li></ul>"
             )
 
     except FileNotFoundError:
