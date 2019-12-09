@@ -90,8 +90,30 @@ def sensores_conectados_extra_view(request):
             "<p> Endereços I2C:" +
             "<ul><li>TMP117: 0x48</li><li>MAX30100: 0x57</li></ul>" +
             "</p>" +
+            "<h2> I2C Scanner: </h2>" +
             "<pre>\n" + resposta_i2cdetect + "\n</pre>"
         )
+        if "57" in resposta_i2cdetect:
+            import max30100
+            max30100_teste = max30100.MAX30100()
+            resposta_final = (
+                resposta_final +
+                "<h2> MAX30100: </h2>" +
+                "<pre>" +
+                str(max30100_teste.get_registers()) +
+                "</pre>"
+            )
+        if "58" in resposta_i2cdetect:
+            import tmp117
+            tmp117_teste = tmp117.TMP117()
+            resposta_final = (
+                resposta_final +
+                "<h2> TMP117: </h2>" +
+                "<pre>" +
+                str(tmp117_teste.get_registers()) +
+                "</pre>"
+            )
+
     except FileNotFoundError:
         resposta_final = "Error in cmd: i2cdetect -y 1"
     return HttpResponse(resposta_final)
