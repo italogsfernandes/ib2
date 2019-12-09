@@ -103,7 +103,7 @@ def sensores_conectados_extra_view(request):
                 str(max30100_teste.get_registers()) +
                 "</pre>"
             )
-        if "58" in resposta_i2cdetect:
+        if "48" in resposta_i2cdetect:
             from vitalis.tmp117 import TMP117
             tmp117_teste = TMP117()
             resposta_final = (
