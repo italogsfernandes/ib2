@@ -1,4 +1,9 @@
 Django==2.2.5
+django-extensions==2.2.5
+pydotplus==2.0.2
+pyparsing==2.4.3
 pyserial==3.4
 pytz==2019.2
+six==1.12.0
+smbus==1.1.post2
 sqlparse==0.3.0
