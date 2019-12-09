@@ -36,7 +36,7 @@ class TMP117(object):
 
     def get_temperature(self):
         temp_raw_value = self.get_temp_result_register_value()
-        temp_value = _twos_complement(temp_raw_value) * 0.0078125
+        temp_value = _twos_complement(temp_raw_value, 16) * 0.0078125
         return temp_value
 
     def get_temp_result_register_value(self):
