@@ -94,7 +94,7 @@ def sensores_conectados_extra_view(request):
             "<pre>\n" + resposta_i2cdetect + "\n</pre>"
         )
         if "57" in resposta_i2cdetect:
-            import max30100
+            import .max30100
             max30100_teste = max30100.MAX30100()
             resposta_final = (
                 resposta_final +
@@ -104,7 +104,7 @@ def sensores_conectados_extra_view(request):
                 "</pre>"
             )
         if "58" in resposta_i2cdetect:
-            import tmp117
+            import .tmp117
             tmp117_teste = tmp117.TMP117()
             resposta_final = (
                 resposta_final +
