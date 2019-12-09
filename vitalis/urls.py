@@ -17,4 +17,5 @@ urlpatterns = [
     path('login', LoginView.as_view(), name='login'),
     path('logout', LogoutView.as_view(), name='logout'),
     path('sing-up', SingUpView.as_view(), name='sing-up'),
+    path('extra', views.sensores_conectados_extra_view, name="extra_view"),
 ]

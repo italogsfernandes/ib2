@@ -1,6 +1,7 @@
+import subprocess
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 
 from .models import MultiparametricReading
@@ -48,6 +49,7 @@ class MyReadingsListView(ListView):
         return r
 
     def post_ajax(self, request, *args, **kwargs):
+        context = self.get_context_data()
         readings_list_content = render_to_string(
             'vitalis/_readings_list.html',
             context=context,
@@ -63,11 +65,26 @@ class MyReadingsListView(ListView):
 class AboutView(TemplateView):
     template_name = "vitalis/about.html"
 
+
 class LoginView(TemplateView):
     template_name = "vitalis/login.html"
+
 
 class LogoutView(TemplateView):
     template_name = "vitalis/logout.html"
 
+
 class SingUpView(TemplateView):
     template_name = "vitalis/sing-up.html"
+
+
+def sensores_conectados_extra_view(request):
+    try:
+        result = subprocess.run(
+            ['i2cdetect', '-y', '1'],
+            stdout=subprocess.PIPE
+        )
+        resposta_i2cdetect = str(result.stdout.decode('utf-8'))
+    except FileNotFoundError:
+        resposta_i2cdetect = "Error in cmd: i2cdetect -y 1"
+    return HttpResponse(resposta_i2cdetect)
