@@ -85,7 +85,13 @@ def sensores_conectados_extra_view(request):
             stdout=subprocess.PIPE
         )
         resposta_i2cdetect = str(result.stdout.decode('utf-8'))
-        resposta_i2cdetect = "<pre>\n" + resposta_i2cdetect + "\n</pre>"
+        resposta_final = (
+            "<h1> Teste Sensores </h1>" +
+            "<p> Endereços I2C:" +
+            "<ul><li>TMP117: 0x48</li><li>MAX30100: 0x57</li></ul>" +
+            "</p>" +
+            "<pre>\n" + resposta_i2cdetect + "\n</pre>"
+        )
     except FileNotFoundError:
-        resposta_i2cdetect = "Error in cmd: i2cdetect -y 1"
-    return HttpResponse(resposta_i2cdetect)
+        resposta_final = "Error in cmd: i2cdetect -y 1"
+    return HttpResponse(resposta_final)
