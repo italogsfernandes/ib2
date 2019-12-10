@@ -91,7 +91,7 @@ class GetTMPDataView(View):
             temperature = self.tmp117.get_temperature()
         except Exception as e:  # NOQA
             connected = 0
-            error_msg = e.message
+            error_msg = str(e)
         data = {
             'temperature': temperature,
             'connected': connected,
