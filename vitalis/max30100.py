@@ -112,6 +112,9 @@ class MAX30100(object):
         self.buffer_red = []
         self.buffer_ir = []
 
+        self.auto_cleaned_buffer_red = []
+        self.auto_cleaned_buffer_ir = []
+
         self.max_buffer_len = max_buffer_len
         self._interrupt = None
 
@@ -165,6 +168,18 @@ class MAX30100(object):
         # Crop our local FIFO buffer to length.
         self.buffer_red = self.buffer_red[-self.max_buffer_len:]
         self.buffer_ir = self.buffer_ir[-self.max_buffer_len:]
+        # copy
+        self.auto_cleaned_buffer_red.append(self.buffer_red[-1])
+        self.auto_cleaned_buffer_ir.append(self.buffer_ir[-1])
+        self.auto_cleaned_buffer_red = self.auto_cleaned_buffer_red[-self.max_buffer_len:]
+        self.auto_cleaned_buffer_ir = self.auto_cleaned_buffer_ir[-self.max_buffer_len:]
+
+    def get_autoclean_buffers(self):
+        buf_red = self.auto_cleaned_buffer_red.copy()
+        buf_ir = self.auto_cleaned_buffer_ir.copy()
+        self.auto_cleaned_buffer_red = []
+        self.auto_cleaned_buffer_ir = []
+        return (buf_red, buf_ir)
 
     def shutdown(self):
         reg = self.i2c.read_byte_data(I2C_ADDRESS, MODE_CONFIG)

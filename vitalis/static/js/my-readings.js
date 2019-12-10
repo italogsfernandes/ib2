@@ -1,4 +1,85 @@
 $(document).ready(function() {
+  var last_buffer_red;
+  var last_buffer_ir;
+
+  var ctx = document.getElementById('chart_oximetro_pulso').getContext('2d');
+  // var ctx_temperature = document.getElementById('chart_temperatura').getContext('2d');
+
+  var oiias = true;
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: "Vermelho",
+        borderColor: 'rgba(255, 0, 0, 0.6)',
+        backgroundColor: 'rgba(255, 0, 0, 0.1)',
+        data: []
+      }, {
+        label: "InfraVermelho",
+        borderColor: 'rgba(138, 43, 226, 0.6)',
+        backgroundColor: 'rgba(138, 43, 226, 0.1)',
+        data: []
+      }]
+    },
+    labels: ['lorem', 'lorem'],
+
+    options: {
+      scales: {
+        xAxes: [{
+          realtime: {
+            duration: 5000, //ms
+            refresh: 1000,      // onRefresh callback will be called every 1000 ms
+            delay: 2000,        // delay of 1000 ms, so upcoming values are known before plotting a line
+            pause: false,       // chart is not paused
+            ttl: undefined,     // data will be automatically deleted as it disappears off the chart
+            onRefresh: function(chart) {
+              var data;
+              $.getJSON("/bpm_data", {data}, function(data, textStatus){
+                // handle your JSON results
+                handle_oxymetry_value(data);
+
+                // chart.data.datasets[0].data = data['buffer_red'];
+                // chart.data.datasets[1].data = data['buffer_ir'];
+
+                // NOTE: Buffer RED
+                data['buffer_red'].forEach(function(item, index, arr){
+                  chart.data.datasets[0].data.push({
+                    x: Date.now()-((arr.length-index)*10),
+                    y: item,
+                  });
+                  // if (chart.data.datasets[0].data.length > 500) {
+                  //   chart.data.datasets[0].data.shift();
+                  // }
+                });
+                // // NOTE: Buffer IR
+                data['buffer_ir'].forEach(function(item, index, arr){
+                  chart.data.datasets[1].data.push({
+                    x: Date.now()-((arr.length-index)*10),
+                    y: item,
+                  });
+                  // if (chart.data.datasets[1].data.length > 500) {
+                  //   chart.data.datasets[1].data.shift();
+                  // }
+                });
+              });
+            }
+          },
+
+          label: 'lorem lorem',
+
+          type: 'realtime'
+        }]
+      }
+    }
+  });
+
+  function update_chart_data(ir_data, red_data) {
+    chart.data.datasets[0].data = red_data;
+    chart.data.datasets[1].data = ir_data;
+    // console.log(chart);
+    // last_buffer_red = red_data;
+  }
+
   function handle_temperature_value(data) {
     $("#id_salva_temperatura").text(
       data['temperature'].toFixed(2) + " ºC"
@@ -97,7 +178,6 @@ $(document).ready(function() {
   }
 
   function handle_oxymetry_value(data) {
-    console.log(data);
     var extra_text_bpm = "";
     var extra_text_spo2 = "";
     var med_status_bpm = "";
@@ -135,6 +215,8 @@ $(document).ready(function() {
     $("#id_p_cad_spo2").text(
       "CAD (Ajuda ao Diagnóstico): " + extra_text_spo2
     );
+
+    // update_chart_data(data['buffer_ir'], data['buffer_red'])
   }
 
   function get_temperature_timer() {
@@ -170,47 +252,4 @@ $(document).ready(function() {
   setTimeout(function(){
       get_oximetry_timer();
   }, 1000);
-
-
-  var ctx = document.getElementById('chart_oximetro_pulso').getContext('2d');
-  // var ctx_temperature = document.getElementById('chart_temperatura').getContext('2d');
-
-  var chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      datasets: [{
-        label: "Vermelho",
-        borderColor: 'rgba(255, 0, 0, 0.6)',
-        backgroundColor: 'rgba(255, 0, 0, 0.1)',
-        data: []
-      }, {
-        label: "InfraVermelho",
-        borderColor: 'rgba(138, 43, 226, 0.6)',
-        backgroundColor: 'rgba(138, 43, 226, 0.1)',
-        data: []
-      }]
-    },
-    labels: ['lorem', 'lorem'],
-
-    options: {
-      scales: {
-        xAxes: [{
-          realtime: {
-            onRefresh: function(chart) {
-              chart.data.datasets.forEach(function(dataset) {
-                dataset.data.push({
-                  x: Date.now(),
-                  y: Math.random()
-                });
-              });
-            }
-          },
-
-          label: 'lorem lorem',
-
-          type: 'realtime'
-        }]
-      }
-    }
-  });
 });

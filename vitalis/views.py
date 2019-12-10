@@ -115,14 +115,27 @@ class GetMAX30100DataView(View):
                 # automatic read the sensor
                 # mx30.read_sensor()
                 (bpm, spo2) = (mx30.ir, mx30.red)
-                (buffer_ir, buffer_red) = (
-                    mx30.buffer_ir[-500:], mx30.buffer_red[-500:]
-                )
+                (buffer_red, buffer_ir) = mx30.get_autoclean_buffers()
             except Exception as e:  # NOQA
                 connected_bpm = 0
                 error_bpm = str(e)
         else:
-            error_bpm = mx30_error
+            # connected_bpm = 0
+            # error_bpm = mx30_error
+            import numpy
+            (bpm, spo2) = (
+                int(numpy.random.normal(loc=70, scale=10, size=1)[0]),
+                int(numpy.random.normal(loc=97, scale=2, size=1)[0]),
+            )
+            buffer_ir = list(
+                numpy.arange(0, 100)
+            )
+            buffer_red = list(
+                numpy.arange(0, 100) + 50
+            )
+            buffer_ir = [int(x) for x in buffer_ir]
+            buffer_red = [int(x) for x in buffer_red]
+
         data = {
             'bpm': bpm,
             'spo2': spo2,

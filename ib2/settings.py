@@ -36,7 +36,7 @@ ALLOWED_HOSTS = [
 mx30 = None
 mx30_error = ""
 try:
-    mx30 = MAX30100()
+    mx30 = MAX30100(max_buffer_len=1000)
     mx30.enable_spo2()
     # Set up a trigger to fire when the FIFO buffer (on the MAX30100) fills up.
     # You could also use INTERRUPT_HR to get a trigger on every measurement.
