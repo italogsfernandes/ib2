@@ -111,9 +111,6 @@ def sensores_conectados_extra_view(request):
             resposta_final = (
                 resposta_final +
                 "<h2> TMP117: </h2>" +
-                "<p>Data Ready: " +
-                str(tmp117_teste.get_configuration_dict()["Data_Ready"] == 1) +
-                "</p>" +
                 "<h3>Registers</h3>" +
                 "<pre>" +
                 str(tmp117_teste.get_registers_as_hex()).replace(

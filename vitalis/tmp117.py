@@ -233,6 +233,7 @@ class TMP117(object):
         }
         return device_id_dict
 
+
 if __name__ == "__main__":
     my_tmp117 = TMP117()
     print(my_tmp117.get_device_id())
