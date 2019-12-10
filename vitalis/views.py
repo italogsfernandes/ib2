@@ -100,7 +100,9 @@ def sensores_conectados_extra_view(request):
                 resposta_final +
                 "<h2> MAX30100: </h2>" +
                 "<pre>" +
-                str(max30100_teste.get_registers()) +
+                str(max30100_teste.get_registers()).replace(
+                    ', ', ',\n '
+                ).replace('}', '\n}') +
                 "</pre>"
             )
         if "48" in resposta_i2cdetect:
@@ -109,17 +111,26 @@ def sensores_conectados_extra_view(request):
             resposta_final = (
                 resposta_final +
                 "<h2> TMP117: </h2>" +
+                "<h3>Registers</h3>" +
                 "<pre>" +
-                str(tmp117_teste.get_registers_as_hex()) +
+                str(tmp117_teste.get_registers_as_hex()).replace(
+                    ', ', ',\n '
+                ).replace('}', '\n}') +
                 "</pre>" +
+                "<h3>Configuration Register</h3>" +
                 "<pre>" +
                 str(tmp117_teste.get_configuration_dict()).replace(
-                    ', ', ',\n'
-                ) +
+                    ', ', ',\n '
+                ).replace('}', '\n}') +
                 "</pre>" +
-                "<ul><li>Temperatura: " +
+                "<ul>" +
+                "<li>Data Ready: " +
+                str(tmp117_teste.get_configuration_dict()) +
+                " ºC </li>" +
+                "<li>Temperatura: " +
                 str(tmp117_teste.get_temperature()) +
-                " ºC </li></ul>"
+                " ºC </li>" +
+                "</ul>"
             )
 
     except FileNotFoundError:
