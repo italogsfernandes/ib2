@@ -139,8 +139,7 @@ $(document).ready(function() {
         $("#id_p_cad").text(
           "CAD (Ajuda ao Diagnóstico): " + extra_text
         );
-
-
+        
         // Call the timeout at the end of the AJAX response
         // This prevents your race condition
         setTimeout(function(){
