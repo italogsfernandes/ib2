@@ -130,6 +130,21 @@ def sensores_conectados_extra_view(request):
                 "<li>Temperatura: " +
                 str(tmp117_teste.get_temperature()) +
                 " ºC </li>" +
+                "<li>High Limit: " +
+                str(tmp117_teste.get_high_limit()) +
+                " ºC </li>" +
+                "<li>Low Limit: " +
+                str(tmp117_teste.get_low_limit()) +
+                " ºC </li>" +
+                "<li>Temperature Offset: " +
+                str(tmp117_teste.get_temperature_offset()) +
+                " ºC </li>" +
+                "<li>Revision: " +
+                str(tmp117_teste.get_device_id_dict()["Rev[3:0]_HEX"]) +
+                " ºC </li>" +
+                "<li>Device ID: " +
+                str(tmp117_teste.get_device_id_dict()["DID[11:0]_HEX"]) +
+                " ºC </li>" +
                 "</ul>"
             )
 
