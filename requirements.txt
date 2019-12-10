@@ -1,5 +1,5 @@
 colorzero==1.1
-Django==2.2.5
+Django==2.2.8
 django-extensions==2.2.5
 gpiozero==1.5.1
 numpy==1.17.4
