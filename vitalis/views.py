@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from vitalis.max30100 import MAX30100
 from vitalis.tmp117 import TMP117
+from ib2.settings import mx30, mx30_error
 
 from .models import MultiparametricReading
 
@@ -96,6 +97,34 @@ class GetTMPDataView(View):
             'temperature': temperature,
             'connected': connected,
             'error_msg': error_msg,
+        }
+        return JsonResponse(data)
+
+
+class GetMAX30100DataView(View):
+    def get(self, request, *args, **kwargs):
+        bpm = 0
+        spo2 = 0
+        buffer_red = []
+        buffer_ir = []
+        connected_bpm = 1
+        error_bpm = ""
+        if mx30 is not None:
+            try:
+                mx30.read_sensor()
+                (bpm, spo2) = (self.mx30.ir, self.mx30.red)
+            except Exception as e:  # NOQA
+                connected_bpm = 0
+                error_bpm = str(e)
+        else:
+            error_bpm = mx30_error
+        data = {
+            'bpm': bpm,
+            'spo2': spo2,
+            'connected_bpm': connected_bpm,
+            'error_bpm': error_bpm,
+            'buffer_red': buffer_red,
+            'buffer_ir': buffer_ir,
         }
         return JsonResponse(data)
 

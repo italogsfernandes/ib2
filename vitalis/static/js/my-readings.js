@@ -96,6 +96,47 @@ $(document).ready(function() {
     );
   }
 
+  function handle_oxymetry_value(data) {
+    console.log(data);
+    var extra_text_bpm = "";
+    var extra_text_spo2 = "";
+    var med_status_bpm = "";
+    var med_status_spo2 = "";
+
+    if (data['connected_bpm'] == 0) {
+      $("#id_salva_freq_cardiaca").css("color", "grey");
+      $("#id_salva_spo2").css("color", "grey");
+      $("#id_salva_freq_cardiaca").attr('title', data['error_bpm']);
+      $("#id_salva_spo2").attr('title', data['error_bpm']);
+    } else {
+      $("#id_salva_freq_cardiaca").attr('title', med_status_bpm);
+      $("#id_salva_spo2").attr('title', med_status_spo2);
+    }
+
+    $("#id_salva_freq_cardiaca").text(
+      data['bpm'] + " bpm"
+    );
+
+    $("#id_p_status_heart").text(
+      "Status: " + med_status_bpm
+    );
+    $("#id_p_cad_heart").text(
+      "CAD (Ajuda ao Diagnóstico): " + extra_text_bpm
+    );
+
+
+    $("#id_salva_spo2").text(
+      data['spo2'] + " %"
+    );
+
+    $("#id_p_status_spo2").text(
+      "Status: " + med_status_spo2
+    );
+    $("#id_p_cad_spo2").text(
+      "CAD (Ajuda ao Diagnóstico): " + extra_text_spo2
+    );
+  }
+
   function get_temperature_timer() {
       var data;
       $.getJSON("/tmp_data", {data}, function(data, textStatus){
@@ -109,8 +150,25 @@ $(document).ready(function() {
       });
   }
 
+  function get_oximetry_timer() {
+      var data;
+      $.getJSON("/bpm_data", {data}, function(data, textStatus){
+        // handle your JSON results
+        handle_oxymetry_value(data);
+        // Call the timeout at the end of the AJAX response
+        // This prevents your race condition
+        setTimeout(function(){
+            get_oximetry_timer();
+        }, 1000);
+      });
+  }
+
   setTimeout(function(){
       get_temperature_timer();
+  }, 1000);
+
+  setTimeout(function(){
+      get_oximetry_timer();
   }, 1000);
 
 

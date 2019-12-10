@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from vitalis.max30100 import MAX30100
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,6 +30,13 @@ ALLOWED_HOSTS = [
     '*',
 ]
 
+mx30 = None
+mx30_error = ""
+try:
+    mx30 = MAX30100()
+    mx30.enable_spo2()
+except Exception as e:
+    mx30_error = str(e)
 
 # Application definition
 

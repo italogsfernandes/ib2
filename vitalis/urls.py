@@ -9,6 +9,7 @@ from .views import (
     LogoutView,
     SingUpView,
     GetTMPDataView,
+    GetMAX30100DataView,
 )
 
 urlpatterns = [
@@ -20,4 +21,5 @@ urlpatterns = [
     path('sing-up', SingUpView.as_view(), name='sing-up'),
     path('extra', views.sensores_conectados_extra_view, name="extra_view"),
     path('tmp_data', GetTMPDataView.as_view(), name="tmp_data"),
+    path('bpm_data', GetMAX30100DataView.as_view(), name="bpm_data"),
 ]
