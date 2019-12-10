@@ -1,8 +1,10 @@
 import subprocess
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, View
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
+from vitalis.max30100 import MAX30100
+from vitalis.tmp117 import TMP117
 
 from .models import MultiparametricReading
 
@@ -78,6 +80,26 @@ class SingUpView(TemplateView):
     template_name = "vitalis/sing-up.html"
 
 
+class GetTMPDataView(View):
+    tmp117 = TMP117()
+
+    def get(self, request, *args, **kwargs):
+        temperature = 0
+        connected = 1
+        error_msg = ""
+        try:
+            temperature = self.tmp117.get_temperature()
+        except Exception as e:  # NOQA
+            connected = 0
+            error_msg = e.message
+        data = {
+            'temperature': temperature,
+            'connected': connected,
+            'error_msg': error_msg,
+        }
+        return JsonResponse(data)
+
+
 def sensores_conectados_extra_view(request):
     try:
         result = subprocess.run(
@@ -94,7 +116,6 @@ def sensores_conectados_extra_view(request):
             "<pre>\n" + resposta_i2cdetect + "\n</pre>"
         )
         if "57" in resposta_i2cdetect:
-            from vitalis.max30100 import MAX30100
             max30100_teste = MAX30100()
             resposta_final = (
                 resposta_final +
@@ -106,7 +127,6 @@ def sensores_conectados_extra_view(request):
                 "</pre>"
             )
         if "48" in resposta_i2cdetect:
-            from vitalis.tmp117 import TMP117
             tmp117_teste = TMP117()
             resposta_final = (
                 resposta_final +

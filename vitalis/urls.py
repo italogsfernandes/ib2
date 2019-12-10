@@ -8,6 +8,7 @@ from .views import (
     LoginView,
     LogoutView,
     SingUpView,
+    GetTMPDataView,
 )
 
 urlpatterns = [
@@ -18,4 +19,5 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout'),
     path('sing-up', SingUpView.as_view(), name='sing-up'),
     path('extra', views.sensores_conectados_extra_view, name="extra_view"),
+    path('tmp_data', GetTMPDataView.as_view(), name="tmp_data"),
 ]
