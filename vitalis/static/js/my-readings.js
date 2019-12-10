@@ -129,6 +129,8 @@ $(document).ready(function() {
         if (data['connected'] == 0) {
           $("#id_salva_temperatura").css("color", "grey");
           $("#id_salva_temperatura").attr('title', data['error_msg']);
+        } else {
+          $("#id_salva_temperatura").attr('title', med_status);
         }
 
         $("#id_p_status").text(
