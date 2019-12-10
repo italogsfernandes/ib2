@@ -40,21 +40,14 @@
       </div>
     </div>
     <div class="col-lg-10">
-
-      <div class="row">
-        <div class="col-lg-offset-1 col-lg-6">
-          <div>
-            <h4 class="text-center">Sinal Oximetro </h4>
-            <canvas id="chart_oximetro_pulso"></canvas>
-          </div>
-        </div>
-
-        <div class="col-lg-offset-1 col-lg-3">
+      <div class="row" style="padding-top: 10px; color: black;">
+        {# NOTE: TEMPERATURE #}
+        <div class="col-lg-4">
           <div>
             <h4 class="text-center">Temperatura</h4>
             <p id="id_salva_temperatura"
                class="text-center"
-               style="font-weight: bold; padding: 175px 0px 175px 0px; font-size: 10ex; color: grey">
+               style="font-weight: bold; padding: 120px 0px 100px 0px; font-size: 10ex; color: grey">
               0.00 ºC
             </p>
             <p id="id_p_status">
@@ -65,17 +58,51 @@
             </p>
           </div>
         </div>
-
-        {# <div class="col-lg-6"> #}
-          {# <div> #}
-            {# <h4>Temperatura</h4> #}
-            {# <canvas id="chart_temperatura"></canvas> #}
-          {# </div> #}
-        {# </div> #}
-
+        {# NOTE: Heart Rate #}
+        <div class="col-lg-4">
+          <div>
+            <h4 class="text-center">Frequência Cardíaca</h4>
+            <p id="id_salva_freq_cardiaca"
+               class="text-center"
+               style="font-weight: bold; padding: 120px 0px 100px 0px; font-size: 10ex; color: grey">
+              60 bpm
+            </p>
+            <p id="id_p_status_heart">
+              Status: -
+            </p>
+            <p id="id_p_cad_heart">
+              CAD (Ajuda ao Diagnóstico): -
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div>
+            <h4 class="text-center">Saturação de O2 (SPO2)</h4>
+            <p id="id_salva_spo2"
+               class="text-center"
+               style="font-weight: bold; padding: 120px 0px 100px 0px; font-size: 10ex; color: grey">
+              98 %
+            </p>
+            <p id="id_p_status_spo2">
+              Status: -
+            </p>
+            <p id="id_p_cad_spo2">
+              CAD (Ajuda ao Diagnóstico): -
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div id="readings_list_div">
+      <div class="row" style="padding-top: 15px;">
+        <div class="col-lg-offset-1 col-lg-10">
+          <div>
+            <h4 class="text-center">Sinal Oxímetro </h4>
+            <canvas id="chart_oximetro_pulso"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div id="readings_list_div" style="padding-top: 15px;">
         {% include 'vitalis/_readings_list.html' %}
       </div>
 

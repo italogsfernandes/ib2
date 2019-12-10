@@ -1,45 +1,3 @@
-var ctx = document.getElementById('chart_oximetro_pulso').getContext('2d');
-// var ctx_temperature = document.getElementById('chart_temperatura').getContext('2d');
-
-var chart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    datasets: [{
-      label: "Vermelho",
-      borderColor: 'rgba(255, 0, 0, 0.6)',
-      backgroundColor: 'rgba(255, 0, 0, 0.1)',
-      data: []
-    }, {
-      label: "InfraVermelho",
-      borderColor: 'rgba(138, 43, 226, 0.6)',
-      backgroundColor: 'rgba(138, 43, 226, 0.1)',
-      data: []
-    }]
-  },
-  labels: ['lorem', 'lorem'],
-
-  options: {
-    scales: {
-      xAxes: [{
-        realtime: {
-          onRefresh: function(chart) {
-            chart.data.datasets.forEach(function(dataset) {
-              dataset.data.push({
-                x: Date.now(),
-                y: Math.random()
-              });
-            });
-          }
-        },
-
-        label: 'lorem lorem',
-
-        type: 'realtime'
-      }]
-    }
-  }
-});
-
 $(document).ready(function() {
   function get_temperature_timer() {
       var data;
@@ -139,7 +97,7 @@ $(document).ready(function() {
         $("#id_p_cad").text(
           "CAD (Ajuda ao Diagnóstico): " + extra_text
         );
-        
+
         // Call the timeout at the end of the AJAX response
         // This prevents your race condition
         setTimeout(function(){
@@ -152,4 +110,46 @@ $(document).ready(function() {
       get_temperature_timer();
   }, 1000);
 
+
+  var ctx = document.getElementById('chart_oximetro_pulso').getContext('2d');
+  // var ctx_temperature = document.getElementById('chart_temperatura').getContext('2d');
+
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: "Vermelho",
+        borderColor: 'rgba(255, 0, 0, 0.6)',
+        backgroundColor: 'rgba(255, 0, 0, 0.1)',
+        data: []
+      }, {
+        label: "InfraVermelho",
+        borderColor: 'rgba(138, 43, 226, 0.6)',
+        backgroundColor: 'rgba(138, 43, 226, 0.1)',
+        data: []
+      }]
+    },
+    labels: ['lorem', 'lorem'],
+
+    options: {
+      scales: {
+        xAxes: [{
+          realtime: {
+            onRefresh: function(chart) {
+              chart.data.datasets.forEach(function(dataset) {
+                dataset.data.push({
+                  x: Date.now(),
+                  y: Math.random()
+                });
+              });
+            }
+          },
+
+          label: 'lorem lorem',
+
+          type: 'realtime'
+        }]
+      }
+    }
+  });
 });
