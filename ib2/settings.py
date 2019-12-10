@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from vitalis.max30100 import MAX30100
+from vitalis.max30100 import MAX30100, INTERRUPT_FIFO
+
+# A button is a good approximation for what we need, a digital active-low trigger
+from gpiozero import Button
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,7 +37,12 @@ mx30 = None
 mx30_error = ""
 try:
     mx30 = MAX30100()
-    # mx30.enable_spo2()
+    mx30.enable_spo2()
+    # Set up a trigger to fire when the FIFO buffer (on the MAX30100) fills up.
+    # You could also use INTERRUPT_HR to get a trigger on every measurement.
+    mx30.set_interrupt(INTERRUPT_FIFO)
+    interrupt = Button(16)  # Pick a pin
+    interrupt.when_activated = mx30.read_sensor  # Connect the interrupt
 except Exception as e:
     mx30_error = str(e)
 

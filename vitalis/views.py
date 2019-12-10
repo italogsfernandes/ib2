@@ -111,9 +111,13 @@ class GetMAX30100DataView(View):
         error_bpm = ""
         if mx30 is not None:
             try:
-                mx30.read_sensor()
+                # No need to read sensor beacause i'm using a interrupt to
+                # automatic read the sensor
+                # mx30.read_sensor()
                 (bpm, spo2) = (mx30.ir, mx30.red)
-                (buffer_ir, buffer_red) = (mx30.buffer_ir, mx30.buffer_red)
+                (buffer_ir, buffer_red) = (
+                    mx30.buffer_ir[-500:], mx30.buffer_red[-500:]
+                )
             except Exception as e:  # NOQA
                 connected_bpm = 0
                 error_bpm = str(e)
