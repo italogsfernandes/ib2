@@ -34,7 +34,7 @@ mx30 = None
 mx30_error = ""
 try:
     mx30 = MAX30100()
-    mx30.enable_spo2()
+    # mx30.enable_spo2()
 except Exception as e:
     mx30_error = str(e)
 
