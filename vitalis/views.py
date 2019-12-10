@@ -127,9 +127,9 @@ def sensores_conectados_extra_view(request):
                 "<li>Data Ready: " +
                 str(tmp117_teste.get_configuration_dict()["Data_Ready"] == 1) +
                 "</li>" +
-                "<li>Temperatura: " +
+                "<li><strong>Temperatura: " +
                 str(tmp117_teste.get_temperature()) +
-                " ºC </li>" +
+                " ºC </strong></li>" +
                 "<li>High Limit: " +
                 str(tmp117_teste.get_high_limit()) +
                 " ºC </li>" +
