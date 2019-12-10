@@ -112,7 +112,7 @@ class GetMAX30100DataView(View):
         if mx30 is not None:
             try:
                 mx30.read_sensor()
-                (bpm, spo2) = (self.mx30.ir, self.mx30.red)
+                (bpm, spo2) = (mx30.ir, mx30.red)
             except Exception as e:  # NOQA
                 connected_bpm = 0
                 error_bpm = str(e)
