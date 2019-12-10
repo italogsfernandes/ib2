@@ -27,6 +27,13 @@ def _twos_complement(val, bits):
     return val
 
 
+def _invert_msb_and_lsb(val):
+    """Invert the MSB with the LSB in a 16bit number"""
+    msb = val >> 8  # get the msb
+    lsb = val & 0x00FF  # get the lsb
+    return (lsb << 8 | msb)  # return a number with lsb a msb inverted
+
+
 class TMP117(object):
     def __init__(self,
                  i2c=None):
@@ -34,61 +41,197 @@ class TMP117(object):
         self.i2c = i2c if i2c else smbus.SMBus(1)
         # TODO: self.set_mode(MODE_HR)  # Trigger an initial temperature read.
 
-    def get_temperature(self):
-        temp_raw_value = self.get_temp_result_register_value()
-        temp_value = temp_raw_value * 0.0078125
-        return temp_value
-
-    def get_temp_result_register_value(self):
-        return self.i2c.read_word_data(I2C_ADDRESS, Temp_Result_Register)
-
     def get_device_id(self):
-        return self.i2c.read_word_data(I2C_ADDRESS, Device_ID_Register)
+        return self.get_register_value(Device_ID_Register)
+
+    def get_register_value(self, register):
+        register_value = self.i2c.read_word_data(
+            I2C_ADDRESS,
+            register,
+        )
+        return _invert_msb_and_lsb(register_value)
+
+    def get_register_value_as_hex(self, register):
+        return hex(self.get_register_value(register))
+
+    def get_register_value_as_bin(self, register):
+        return bin(self.get_register_value(register))
 
     def get_registers(self):
         return {
-            "Temp_Result_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "Temp_Result_Register": self.get_register_value(
                 Temp_Result_Register,
             ),
-            "Configuration_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "Configuration_Register": self.get_register_value(
                 Configuration_Register,
             ),
-            "THigh_Limit_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "THigh_Limit_Register": self.get_register_value(
                 THigh_Limit_Register,
             ),
-            "TLow_Limit_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "TLow_Limit_Register": self.get_register_value(
                 TLow_Limit_Register,
             ),
-            "EEPROM_UL_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "EEPROM_UL_Register": self.get_register_value(
                 EEPROM_UL_Register,
             ),
-            "EEPROM1_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "EEPROM1_Register": self.get_register_value(
                 EEPROM1_Register,
             ),
-            "EEPROM2_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "EEPROM2_Register": self.get_register_value(
                 EEPROM2_Register,
             ),
-            "Temp_Offset_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "Temp_Offset_Register": self.get_register_value(
                 Temp_Offset_Register,
             ),
-            "EEPROM3_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "EEPROM3_Register": self.get_register_value(
                 EEPROM3_Register,
             ),
-            "Device_ID_Register": self.i2c.read_word_data(
-                I2C_ADDRESS,
+            "Device_ID_Register": self.get_register_value(
                 Device_ID_Register,
             ),
         }
 
+    def get_registers_as_hex(self):
+        return {
+            "Temp_Result_Register": self.get_register_value_as_hex(
+                Temp_Result_Register,
+            ),
+            "Configuration_Register": self.get_register_value_as_hex(
+                Configuration_Register,
+            ),
+            "THigh_Limit_Register": self.get_register_value_as_hex(
+                THigh_Limit_Register,
+            ),
+            "TLow_Limit_Register": self.get_register_value_as_hex(
+                TLow_Limit_Register,
+            ),
+            "EEPROM_UL_Register": self.get_register_value_as_hex(
+                EEPROM_UL_Register,
+            ),
+            "EEPROM1_Register": self.get_register_value_as_hex(
+                EEPROM1_Register,
+            ),
+            "EEPROM2_Register": self.get_register_value_as_hex(
+                EEPROM2_Register,
+            ),
+            "Temp_Offset_Register": self.get_register_value_as_hex(
+                Temp_Offset_Register,
+            ),
+            "EEPROM3_Register": self.get_register_value_as_hex(
+                EEPROM3_Register,
+            ),
+            "Device_ID_Register": self.get_register_value_as_hex(
+                Device_ID_Register,
+            ),
+        }
+
+    def get_registers_as_bin(self):
+        return {
+            "Temp_Result_Register": self.get_register_value_as_bin(
+                Temp_Result_Register,
+            ),
+            "Configuration_Register": self.get_register_value_as_bin(
+                Configuration_Register,
+            ),
+            "THigh_Limit_Register": self.get_register_value_as_bin(
+                THigh_Limit_Register,
+            ),
+            "TLow_Limit_Register": self.get_register_value_as_bin(
+                TLow_Limit_Register,
+            ),
+            "EEPROM_UL_Register": self.get_register_value_as_bin(
+                EEPROM_UL_Register,
+            ),
+            "EEPROM1_Register": self.get_register_value_as_bin(
+                EEPROM1_Register,
+            ),
+            "EEPROM2_Register": self.get_register_value_as_bin(
+                EEPROM2_Register,
+            ),
+            "Temp_Offset_Register": self.get_register_value_as_bin(
+                Temp_Offset_Register,
+            ),
+            "EEPROM3_Register": self.get_register_value_as_bin(
+                EEPROM3_Register,
+            ),
+            "Device_ID_Register": self.get_register_value_as_bin(
+                Device_ID_Register,
+            ),
+        }
+
+    def get_temperature(self):
+        temp_raw_value = self.get_register_value(Temp_Result_Register)
+        temp_value = _twos_complement(temp_raw_value, 16) * 0.0078125
+        return temp_value
+
+    def get_configuration_dict(self):
+        configuration_register = self.get_register_value(
+            Configuration_Register,
+        )
+        configuration_dict = {
+            'HEX': hex(configuration_register),
+            'BIN': bin(configuration_register),
+            'HIGH_Alert': configuration_register & (1 << 15),
+            'LOW_Alert': configuration_register & (1 << 14),
+            'Data_Ready': configuration_register & (1 << 13),
+            'EEPROM_Busy': configuration_register & (1 << 12),
+            'MOD[1:0]': bin((configuration_register >> 10) & (0b11)),
+            'CONV[2:0]': bin((configuration_register >> 7) & (0b111)),
+            'AVG[1:0]': bin((configuration_register >> 5) & (0b11)),
+            'T/nA': configuration_register & (1 << 4),
+            'POL': configuration_register & (1 << 3),
+            'DR/Alert': configuration_register & (1 << 2),
+            'Soft_Reset': configuration_register & (1 << 1),
+            '-': configuration_register & (1),
+        }
+        return configuration_dict
+
+    def get_high_limit(self):
+        high_raw_value = self.get_register_value(THigh_Limit_Register)
+        high_value = _twos_complement(high_raw_value, 16) * 0.0078125
+        return high_value
+
+    def get_low_limit(self):
+        low_raw_value = self.get_register_value(TLow_Limit_Register)
+        low_value = _twos_complement(low_raw_value, 16) * 0.0078125
+        return low_value
+
+    def get_EEPROM_Unlock_dict(self):
+        # TODO
+        return {}
+
+    def get_EEPROM1(self):
+        # TODO
+        return 0
+
+    def get_EEPROM2(self):
+        # TODO
+        return 0
+
+    def get_temperature_offset(self):
+        temp_offset_raw_value = self.get_register_value(Temp_Offset_Register)
+        temp_offset_value = _twos_complement(
+            temp_offset_raw_value, 16
+        ) * 0.0078125
+        return temp_offset_value
+
+    def get_EEPROM3(self):
+        # TODO
+        return 0
+
+    def get_device_id_dict(self):
+        device_id = self.get_register_value(Device_ID_Register)
+        rev = (device_id >> 12) & (0b1111)
+        did = (device_id & (0b0000111111111111)
+        device_id_dict = {
+            'HEX': hex(device_id),
+            'BIN': bin(device_id),
+            'Rev[3:0]': rev,
+            'Rev[3:0]_HEX': hex(rev),
+            'DID[11:0]': did,
+            'DID[11:0]_HEX': hex(did),
+        }
+        return device_id_dict
 
 if __name__ == "__main__":
     my_tmp117 = TMP117()

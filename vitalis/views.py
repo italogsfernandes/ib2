@@ -110,7 +110,12 @@ def sensores_conectados_extra_view(request):
                 resposta_final +
                 "<h2> TMP117: </h2>" +
                 "<pre>" +
-                str(tmp117_teste.get_registers()) +
+                str(tmp117_teste.get_registers_as_hex()) +
+                "</pre>" +
+                "<pre>" +
+                str(tmp117_teste.get_configuration_dict()).replace(
+                    ', ', ',\n'
+                ) +
                 "</pre>" +
                 "<ul><li>Temperatura: " +
                 str(tmp117_teste.get_temperature()) +
