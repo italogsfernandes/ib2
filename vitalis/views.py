@@ -130,10 +130,10 @@ def sensores_conectados_extra_view(request):
                 "<li><strong>Temperatura: " +
                 str(tmp117_teste.get_temperature()) +
                 " ºC </strong></li>" +
-                "<li>High Limit: " +
+                "<li display='none;'>High Limit: " +
                 str(tmp117_teste.get_high_limit()) +
                 " ºC </li>" +
-                "<li>Low Limit: " +
+                "<li display='none;'>Low Limit: " +
                 str(tmp117_teste.get_low_limit()) +
                 " ºC </li>" +
                 "<li>Temperature Offset: " +
