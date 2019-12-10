@@ -131,11 +131,11 @@ $(document).ready(function() {
           $("#id_salva_temperatura").attr('title', data['error_msg']);
         }
 
-        $("#id_p_cad").text(
+        $("#id_p_status").text(
           "Status: " + med_status
         );
         $("#id_p_cad").text(
-          "CAD (Ajuda ao Diagnóstico): " + med_status
+          "CAD (Ajuda ao Diagnóstico): " + extra_text
         );
 
 
