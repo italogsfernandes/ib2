@@ -141,10 +141,10 @@ def sensores_conectados_extra_view(request):
                 " ºC </li>" +
                 "<li>Revision: " +
                 str(tmp117_teste.get_device_id_dict()["Rev[3:0]_HEX"]) +
-                " ºC </li>" +
+                "</li>" +
                 "<li>Device ID: " +
                 str(tmp117_teste.get_device_id_dict()["DID[11:0]_HEX"]) +
-                " ºC </li>" +
+                "</li>" +
                 "</ul>"
             )
 
