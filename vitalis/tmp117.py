@@ -222,7 +222,7 @@ class TMP117(object):
     def get_device_id_dict(self):
         device_id = self.get_register_value(Device_ID_Register)
         rev = (device_id >> 12) & (0b1111)
-        did = (device_id & (0b0000111111111111)
+        did = (device_id & (0b0000111111111111))
         device_id_dict = {
             'HEX': hex(device_id),
             'BIN': bin(device_id),
