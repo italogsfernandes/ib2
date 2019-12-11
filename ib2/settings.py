@@ -50,7 +50,7 @@ except Exception as e:
     print(e)
     mx30_error = str(e)
 
-mx30 = None
+# mx30 = None
 
 # Application definition
 
