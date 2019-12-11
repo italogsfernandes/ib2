@@ -124,7 +124,7 @@ class GetMAX30100DataView(View):
             # error_bpm = mx30_error
             import numpy
             (bpm, spo2) = (
-                int(numpy.random.normal(loc=70, scale=10, size=1)[0]),
+                int(numpy.random.normal(loc=70, scale=5, size=1)[0]),
                 int(numpy.random.normal(loc=98, scale=1, size=1)[0]),
             )
             buffer_ir = list(
