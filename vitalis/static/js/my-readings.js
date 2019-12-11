@@ -28,8 +28,8 @@ $(document).ready(function() {
         xAxes: [{
           realtime: {
             duration: 5000, //ms
-            refresh: 2000,      // onRefresh callback will be called every 1000 ms
-            delay: 4000,        // delay of 1000 ms, so upcoming values are known before plotting a line
+            refresh: 1000,      // onRefresh callback will be called every 1000 ms
+            delay: 2000,        // delay of 1000 ms, so upcoming values are known before plotting a line
             pause: false,       // chart is not paused
             ttl: undefined,     // data will be automatically deleted as it disappears off the chart
             onRefresh: function(chart) {
