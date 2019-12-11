@@ -186,7 +186,7 @@ class MAX30100(object):
     def calculate_heart_rate_and_spo2(self, window_length):
         hr = 0
         spo2 = 0
-        # 
+        #
         # ir_data = np.array(self.buffer_ir[-window_length:])
         # red_data = np.array(self.buffer_red[-window_length:])
         #
