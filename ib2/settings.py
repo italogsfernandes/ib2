@@ -42,7 +42,7 @@ try:
     mx30.enable_spo2()
     # Set up a trigger to fire when the FIFO buffer (on the MAX30100) fills up.
     # You could also use INTERRUPT_HR to get a trigger on every measurement.
-    mx30.enable_interrupt(max30100.INTERRUPT_HR)
+    mx30.enable_interrupt(max30100.INTERRUPT_SPO2)
     interrupt = Button(16)  # Pick a pin
     interrupt.when_activated = mx30.read_sensor  # Connect the interrupt
     print("MAX30100 configurado")
