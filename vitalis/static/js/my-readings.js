@@ -52,15 +52,15 @@ $(document).ready(function() {
                   // }
                 });
                 // // NOTE: Buffer IR
-                data['buffer_ir'].forEach(function(item, index, arr){
-                  chart.data.datasets[1].data.push({
-                    x: Date.now()-((arr.length-index)*10),
-                    y: item,
-                  });
-                  // if (chart.data.datasets[1].data.length > 500) {
-                  //   chart.data.datasets[1].data.shift();
-                  // }
-                });
+                // data['buffer_ir'].forEach(function(item, index, arr){
+                //   chart.data.datasets[1].data.push({
+                //     x: Date.now()-((arr.length-index)*10),
+                //     y: item,
+                //   });
+                //   // if (chart.data.datasets[1].data.length > 500) {
+                //   //   chart.data.datasets[1].data.shift();
+                //   // }
+                // });
               });
             }
           },
