@@ -125,7 +125,7 @@ class GetMAX30100DataView(View):
             import numpy
             (bpm, spo2) = (
                 int(numpy.random.normal(loc=70, scale=10, size=1)[0]),
-                int(numpy.random.normal(loc=97, scale=2, size=1)[0]),
+                int(numpy.random.normal(loc=98, scale=1, size=1)[0]),
             )
             buffer_ir = list(
                 numpy.arange(0, 100)
