@@ -228,7 +228,7 @@ $(document).ready(function() {
         // This prevents your race condition
         setTimeout(function(){
             get_temperature_timer();
-        }, 1000);
+        }, 2000);
       });
   }
 
