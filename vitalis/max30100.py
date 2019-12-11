@@ -207,7 +207,7 @@ class MAX30100(object):
         # )
         (hr, spo2) = (
             int(np.random.normal(loc=70, scale=5, size=1)[0]),
-            int(np.random.normal(loc=98, scale=1, size=1)[0]),
+            int(np.random.normal(loc=98, scale=0.5, size=1)[0]),
         )
         return (hr, spo2)
 
