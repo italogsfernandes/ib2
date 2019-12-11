@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from vitalis.max30100 import MAX30100, INTERRUPT_FIFO
 
-# A button is a good approximation for what we need, a digital active-low trigger
+# A button is a good approximation for what we need,
+# a digital active-low trigger
 from gpiozero import Button
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -43,6 +44,7 @@ try:
     mx30.set_interrupt(INTERRUPT_FIFO)
     interrupt = Button(16)  # Pick a pin
     interrupt.when_activated = mx30.read_sensor  # Connect the interrupt
+    print("MAX30100 configurado")
 except Exception as e:
     mx30_error = str(e)
 
