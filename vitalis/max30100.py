@@ -209,7 +209,8 @@ class MAX30100(object):
             int(np.random.normal(loc=70, scale=5, size=1)[0]),
             int(np.random.normal(loc=98, scale=0.5, size=1)[0]),
         )
-        return (hr, spo2)
+        # return (hr, spo2)
+        return (0, 0)
 
     def shutdown(self):
         reg = self.i2c.read_byte_data(I2C_ADDRESS, MODE_CONFIG)
