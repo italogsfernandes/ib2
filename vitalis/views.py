@@ -116,7 +116,7 @@ class GetMAX30100DataView(View):
                 # mx30.read_sensor()
                 (bpm, spo2) = mx30.calculate_heart_rate_and_spo2(400)
                 # (buffer_red, buffer_ir) = mx30.get_autoclean_buffers()
-                (buffer_red, buffer_ir) = (mx30.buffer_red, mx30.buffer_ir)
+                (buffer_red, buffer_ir) = (mx30.buffer_red[-100:], mx30.buffer_ir[-100:])
             except Exception as e:  # NOQA
                 connected_bpm = 0
                 error_bpm = str(e)
