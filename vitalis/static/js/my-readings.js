@@ -232,24 +232,24 @@ $(document).ready(function() {
       });
   }
 
-  function get_oximetry_timer() {
-      var data;
-      $.getJSON("/bpm_data", {data}, function(data, textStatus){
-        // handle your JSON results
-        handle_oxymetry_value(data);
-        // Call the timeout at the end of the AJAX response
-        // This prevents your race condition
-        setTimeout(function(){
-            get_oximetry_timer();
-        }, 1000);
-      });
-  }
+  // function get_oximetry_timer() {
+  //     var data;
+  //     $.getJSON("/bpm_data", {data}, function(data, textStatus){
+  //       // handle your JSON results
+  //       handle_oxymetry_value(data);
+  //       // Call the timeout at the end of the AJAX response
+  //       // This prevents your race condition
+  //       setTimeout(function(){
+  //           get_oximetry_timer();
+  //       }, 1000);
+  //     });
+  // }
 
   setTimeout(function(){
       get_temperature_timer();
   }, 1000);
 
-  setTimeout(function(){
-      get_oximetry_timer();
-  }, 1000);
+  // setTimeout(function(){
+  //     get_oximetry_timer();
+  // }, 1000);
 });

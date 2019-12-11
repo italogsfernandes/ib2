@@ -120,6 +120,7 @@ class GetMAX30100DataView(View):
                 connected_bpm = 0
                 error_bpm = str(e)
         else:
+            # Caso não esteja conectado mostre dados FALSOS
             # connected_bpm = 0
             # error_bpm = mx30_error
             import numpy
