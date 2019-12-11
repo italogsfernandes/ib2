@@ -205,7 +205,10 @@ class MAX30100(object):
         # peaks_red, properties_red = sp.signal.find_peaks(
         #     red_ac, height=red_height
         # )
-
+        (hr, spo2) = (
+            int(np.random.normal(loc=70, scale=5, size=1)[0]),
+            int(np.random.normal(loc=98, scale=1, size=1)[0]),
+        )
         return (hr, spo2)
 
     def shutdown(self):
