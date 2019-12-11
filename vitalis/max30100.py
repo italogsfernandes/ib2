@@ -7,6 +7,8 @@
   September 2017
 """
 
+import numpy as np
+import scipy as sp
 import smbus
 
 INT_STATUS = 0x00  # Which interrupts are tripped
@@ -180,6 +182,31 @@ class MAX30100(object):
         self.auto_cleaned_buffer_red = []
         self.auto_cleaned_buffer_ir = []
         return (buf_red, buf_ir)
+
+    def calculate_heart_rate_and_spo2(self, window_length):
+        hr = 0
+        spo2 = 0
+
+        ir_data = np.array(self.buffer_ir[-window_length:])
+        red_data = np.array(self.buffer_red[-window_length:])
+
+        ir_dc = np.mean(ir_data)
+        red_dc = np.mean(red_data)
+
+        ir_ac = ir_data - ir_dc
+        red_ac = red_data - red_dc
+
+        ir_height = None
+        red_height = None
+
+        peaks_ir, properties_ir = sp.signal.find_peaks(
+            ir_ac, height=ir_height
+        )
+        peaks_red, properties_red = sp.signal.find_peaks(
+            red_ac, height=red_height
+        )
+
+        return (hr, spo2)
 
     def shutdown(self):
         reg = self.i2c.read_byte_data(I2C_ADDRESS, MODE_CONFIG)

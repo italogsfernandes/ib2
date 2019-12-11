@@ -114,7 +114,7 @@ class GetMAX30100DataView(View):
                 # No need to read sensor beacause i'm using a interrupt to
                 # automatic read the sensor
                 # mx30.read_sensor()
-                (bpm, spo2) = (mx30.ir, mx30.red)
+                (bpm, spo2) = mx30.calculate_heart_rate_and_spo2(400)
                 (buffer_red, buffer_ir) = mx30.get_autoclean_buffers()
             except Exception as e:  # NOQA
                 connected_bpm = 0
