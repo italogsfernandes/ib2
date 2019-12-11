@@ -130,14 +130,16 @@ class GetMAX30100DataView(View):
                 int(numpy.random.normal(loc=70, scale=5, size=1)[0]),
                 int(numpy.random.normal(loc=98, scale=1, size=1)[0]),
             )
-            time_vector = numpy.linspace(0, 1, 200)
+            time_vector = numpy.linspace(0, 1, 100)
             buffer_ir = list(
                 100 * numpy.sin(2*numpy.pi*1*time_vector) +
-                55 * numpy.sin(2*numpy.pi*2*time_vector) + 100
+                55 * numpy.sin(2*numpy.pi*2*time_vector) + 100 +
+                numpy.random.normal(loc=0, scale=5, size=100)
             )
             buffer_red = list(
                 100 * numpy.sin(2*numpy.pi*1*time_vector) +
-                50 * numpy.sin(2*numpy.pi*2*time_vector) + 130
+                50 * numpy.sin(2*numpy.pi*2*time_vector) + 130 +
+                numpy.random.normal(loc=0, scale=5, size=100)
             )
             buffer_ir = [int(x) for x in buffer_ir]
             buffer_red = [int(x) for x in buffer_red]
