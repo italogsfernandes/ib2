@@ -167,12 +167,12 @@ def sensores_conectados_extra_view(request):
             "<pre>\n" + resposta_i2cdetect + "\n</pre>"
         )
         if "57" in resposta_i2cdetect:
-            max30100_teste = MAX30100()
+            # max30100_teste = MAX30100()
             resposta_final = (
                 resposta_final +
                 "<h2> MAX30100: </h2>" +
                 "<pre>" +
-                str(max30100_teste.get_registers()).replace(
+                str(mx30.get_registers()).replace(
                     ', ', ',\n '
                 ).replace('}', '\n}') +
                 "</pre>"
